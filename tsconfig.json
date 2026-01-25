@@ -12,6 +12,8 @@
     "useDefineForClassFields": true,
     "sourceMap": true,
     "baseUrl": ".",
+    "noImplicitAny": false,
+    "allowJs": true,
     "types": [
       "webpack-env",
       "jest"
@@ -36,6 +38,7 @@
     "tests/**/*.tsx"
   ],
   "exclude": [
-    "node_modules"
+    "node_modules",
+    "node_modules/**"
   ]
 }
