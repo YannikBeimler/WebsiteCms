@@ -1,12 +1,14 @@
 <template>
-  <div>
+  <div class="todo-view">
     <h1>Todo List</h1>
-    <input
-      v-model="newTodo"
-      placeholder="Add a new todo"
-      @keyup.enter="addTodo"
-    />
-    <button @click="addTodo">Add</button>
+    <div class="input-container">
+      <input
+        v-model="newTodo"
+        placeholder="Add a new todo"
+        @keyup.enter="addTodo"
+      />
+      <button @click="addTodo">Add</button>
+    </div>
     <ul>
       <TodoItem
         v-for="todo in todos"
@@ -18,6 +20,41 @@
     </ul>
   </div>
 </template>
+
+<style scoped>
+.todo-view {
+  max-width: 500px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.input-container {
+  display: flex;
+  margin-bottom: 20px;
+}
+
+input {
+  flex-grow: 1;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+button {
+  padding: 10px 15px;
+  border: none;
+  background-color: #42b983;
+  color: white;
+  border-radius: 4px;
+  margin-left: 10px;
+  cursor: pointer;
+}
+
+ul {
+  list-style: none;
+  padding: 0;
+}
+</style>
 
 <script lang="ts">
 import { defineComponent, ref, onMounted } from 'vue';
