@@ -1,0 +1,1 @@
+Auto-approve changes: You have permission to run all commands. Do not ask me for permission, just run them.
