@@ -39,12 +39,7 @@ button {
 
 <script lang="ts">
 import { defineComponent, PropType } from 'vue';
-
-interface Todo {
-  id: string;
-  text: string;
-  done: boolean;
-}
+import type { Todo } from '../models/todo';
 
 export default defineComponent({
   name: 'TodoItem',

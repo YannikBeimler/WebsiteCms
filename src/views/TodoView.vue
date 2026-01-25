@@ -58,22 +58,9 @@ ul {
 
 <script lang="ts">
 import { defineComponent, ref, onMounted } from 'vue';
-import {
-  collection,
-  onSnapshot,
-  addDoc,
-  doc,
-  updateDoc,
-  deleteDoc,
-} from 'firebase/firestore';
-import { db } from '../firebase';
+import { todoService } from '../services/todoService';
+import type { Todo } from '../models/todo';
 import TodoItem from '../components/TodoItem.vue';
-
-interface Todo {
-  id: string;
-  text: string;
-  done: boolean;
-}
 
 export default defineComponent({
   name: 'TodoView',
@@ -84,36 +71,31 @@ export default defineComponent({
     const newTodo = ref('');
     const todos = ref<Todo[]>([]);
 
-    const addTodo = () => {
+    const fetchTodos = async () => {
+      todos.value = await todoService.getTodos();
+    };
+
+    const addTodo = async () => {
       if (newTodo.value.trim() !== '') {
-        addDoc(collection(db, 'todos'), {
-          text: newTodo.value,
-          done: false,
-        });
+        await todoService.addTodo(newTodo.value);
         newTodo.value = '';
+        await fetchTodos(); // Refresh the list
       }
     };
 
-    const toggleTodo = (todo: Todo) => {
-      const todoRef = doc(db, 'todos', todo.id);
-      updateDoc(todoRef, {
-        done: !todo.done,
-      });
+    const toggleTodo = async (todo: Todo) => {
+      const updatedTodo = { ...todo, done: !todo.done };
+      await todoService.updateTodo(updatedTodo);
+      await fetchTodos(); // Refresh the list
     };
 
-    const deleteTodo = (id: string) => {
-      const todoRef = doc(db, 'todos', id);
-      deleteDoc(todoRef);
+    const deleteTodo = async (id: string) => {
+      await todoService.deleteTodo(id);
+      await fetchTodos(); // Refresh the list
     };
 
     onMounted(() => {
-      onSnapshot(collection(db, 'todos'), (snapshot) => {
-        todos.value = snapshot.docs.map((doc) => ({
-          id: doc.id,
-          text: doc.data().text,
-          done: doc.data().done,
-        }));
-      });
+      fetchTodos();
     });
 
     return {
