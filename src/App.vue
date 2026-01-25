@@ -1,55 +1,31 @@
 <template>
-  <div>
-    <h1>Todo List</h1>
-    <input v-model="newTodo" placeholder="Add a new todo" />
-    <button @click="addTodo">Add</button>
-    <ul>
-      <li v-for="todo in todos" :key="todo.id">
-        {{ todo.text }}
-      </li>
-    </ul>
-  </div>
+  <nav>
+    <router-link to="/">Home</router-link> |
+    <router-link to="/about">About</router-link> |
+    <router-link to="/todo">Todo List</router-link>
+  </nav>
+  <router-view />
 </template>
 
-<script lang="ts">
-import { defineComponent, ref, onMounted } from 'vue';
-import { collection, onSnapshot, addDoc } from 'firebase/firestore';
-import { db } from './firebase';
-
-interface Todo {
-  id: string;
-  text: string;
+<style lang="less">
+#app {
+  font-family: Avenir, Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-align: center;
+  color: #2c3e50;
 }
 
-export default defineComponent({
-  name: 'App',
-  setup() {
-    const newTodo = ref('');
-    const todos = ref<Todo[]>([]);
+nav {
+  padding: 30px;
 
-    const addTodo = () => {
-      if (newTodo.value.trim() !== '') {
-        addDoc(collection(db, 'todos'), {
-          text: newTodo.value,
-        });
-        newTodo.value = '';
-      }
-    };
+  a {
+    font-weight: bold;
+    color: #2c3e50;
 
-    onMounted(() => {
-      onSnapshot(collection(db, 'todos'), (snapshot) => {
-        todos.value = snapshot.docs.map((doc) => ({
-          id: doc.id,
-          text: doc.data().text,
-        }));
-      });
-    });
-
-    return {
-      newTodo,
-      todos,
-      addTodo,
-    };
-  },
-});
-</script>
+    &.router-link-exact-active {
+      color: #42b983;
+    }
+  }
+}
+</style>
