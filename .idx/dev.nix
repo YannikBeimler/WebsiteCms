@@ -18,6 +18,7 @@
   idx = {
     # Search for the extensions you want on https://open-vsx.org/ and use "publisher.id"
     extensions = [
+      "Vue.volar"
       # "vscodevim.vim"
     ];
 
