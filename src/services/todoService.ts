@@ -1,6 +1,6 @@
 import {
   collection,
-  getDocs,
+  onSnapshot,
   addDoc,
   updateDoc,
   deleteDoc,
@@ -12,9 +12,14 @@ import type { Todo } from '@/models/todo';
 const todosCollection = collection(db, 'todos');
 
 export const todoService = {
-  async getTodos(): Promise<Todo[]> {
-    const snapshot = await getDocs(todosCollection);
-    return snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() } as Todo));
+  getTodos(callback: (todos: Todo[]) => void): () => void {
+    const unsubscribe = onSnapshot(todosCollection, (snapshot) => {
+      const todos = snapshot.docs.map(
+        (doc) => ({ id: doc.id, ...doc.data() } as Todo)
+      );
+      callback(todos);
+    });
+    return unsubscribe;
   },
 
   async addTodo(text: string): Promise<Todo> {

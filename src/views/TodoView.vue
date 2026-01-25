@@ -57,7 +57,7 @@ ul {
 </style>
 
 <script lang="ts">
-import { defineComponent, ref, onMounted } from 'vue';
+import { defineComponent, ref, onMounted, onUnmounted } from 'vue';
 import { todoService } from '../services/todoService';
 import type { Todo } from '../models/todo';
 import TodoItem from '../components/TodoItem.vue';
@@ -70,33 +70,35 @@ export default defineComponent({
   setup() {
     const newTodo = ref('');
     const todos = ref<Todo[]>([]);
+    let unsubscribe: () => void;
 
-    const fetchTodos = async () => {
-      todos.value = await todoService.getTodos();
-    };
+    onMounted(() => {
+      unsubscribe = todoService.getTodos((updatedTodos) => {
+        todos.value = updatedTodos;
+      });
+    });
+
+    onUnmounted(() => {
+      if (unsubscribe) {
+        unsubscribe();
+      }
+    });
 
     const addTodo = async () => {
       if (newTodo.value.trim() !== '') {
         await todoService.addTodo(newTodo.value);
         newTodo.value = '';
-        await fetchTodos(); // Refresh the list
       }
     };
 
     const toggleTodo = async (todo: Todo) => {
       const updatedTodo = { ...todo, done: !todo.done };
       await todoService.updateTodo(updatedTodo);
-      await fetchTodos(); // Refresh the list
     };
 
     const deleteTodo = async (id: string) => {
       await todoService.deleteTodo(id);
-      await fetchTodos(); // Refresh the list
     };
-
-    onMounted(() => {
-      fetchTodos();
-    });
 
     return {
       newTodo,
