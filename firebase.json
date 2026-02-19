@@ -26,8 +26,8 @@
     "auth": {
       "port": 9099
     },
-    "firestore": {
-      "port": 8081
+        "firestore": {
+      "port": 8026
     },
     "hosting": {
       "port": 5000
@@ -39,6 +39,5 @@
       "enabled": true
     },
     "singleProjectMode": true
-  },
-  "extensions": {}
+  }
 }

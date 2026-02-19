@@ -11,6 +11,12 @@ npm install
 npm run serve
 ```
 
+### Run Firebase emulators for development
+```
+npm run serve:emulator
+```
+This starts the Firebase emulators (Firestore, Auth, Storage, Hosting). In development mode, the app automatically connects to the emulators instead of the production Firebase services.
+
 ### Compiles and minifies for production
 ```
 npm run build

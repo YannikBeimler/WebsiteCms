@@ -24,3 +24,5 @@ pnpm-debug.log*
 
 # Firebase
 .firebase/*.cache
+firebase-debug.log
+firestore-debug.log
