@@ -38,7 +38,9 @@ describe('TodoItem.vue', () => {
     });
     await wrapper.find('.edit-btn').trigger('click');
     expect(wrapper.find('.edit-input').exists()).toBe(true);
-    expect((wrapper.find('.edit-input').element as HTMLInputElement).value).toBe('Test Todo');
+    expect(
+      (wrapper.find('.edit-input').element as HTMLInputElement).value
+    ).toBe('Test Todo');
   });
 
   it('emits update event when saving valid edit', async () => {
@@ -51,7 +53,9 @@ describe('TodoItem.vue', () => {
     await input.setValue('Updated Todo');
     await input.trigger('keyup.enter');
     expect(wrapper.emitted('update')).toBeTruthy();
-    expect(wrapper.emitted('update')![0]).toEqual([{ ...todo, text: 'Updated Todo' }]);
+    expect(wrapper.emitted('update')![0]).toEqual([
+      { ...todo, text: 'Updated Todo' },
+    ]);
     expect(wrapper.find('.edit-input').exists()).toBe(false);
   });
 

@@ -3,7 +3,9 @@
     <input type="checkbox" :checked="todo.done" @change="toggleTodo" />
     <template v-if="!isEditing">
       <span>{{ todo.text }}</span>
-      <button v-if="!todo.done" @click="startEdit" class="edit-btn">Edit</button>
+      <button v-if="!todo.done" @click="startEdit" class="edit-btn">
+        Edit
+      </button>
     </template>
     <template v-else>
       <input
@@ -82,11 +84,14 @@ export default defineComponent({
     const editText = ref(props.todo.text);
     const editInput = ref<HTMLInputElement | null>(null);
 
-    watch(() => props.todo.done, (isDone) => {
-      if (isDone) {
-        isEditing.value = false;
+    watch(
+      () => props.todo.done,
+      (isDone) => {
+        if (isDone) {
+          isEditing.value = false;
+        }
       }
-    });
+    );
 
     const startEdit = () => {
       if (!props.todo.done) {
@@ -100,7 +105,7 @@ export default defineComponent({
 
     const saveEdit = () => {
       if (!isEditing.value) return;
-      
+
       const trimmedText = editText.value.trim();
       if (trimmedText === '') {
         editText.value = props.todo.text;
