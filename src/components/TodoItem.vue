@@ -1,8 +1,21 @@
 <template>
   <li :class="{ done: todo.done }">
     <input type="checkbox" :checked="todo.done" @change="toggleTodo" />
-    <span>{{ todo.text }}</span>
-    <button @click="deleteTodo">Delete</button>
+    <template v-if="!isEditing">
+      <span>{{ todo.text }}</span>
+      <button v-if="!todo.done" @click="startEdit" class="edit-btn">Edit</button>
+    </template>
+    <template v-else>
+      <input
+        ref="editInput"
+        v-model="editText"
+        class="edit-input"
+        @keyup.enter="saveEdit"
+        @keyup.esc="cancelEdit"
+        @blur="saveEdit"
+      />
+    </template>
+    <button @click="deleteTodo" class="delete-btn">Delete</button>
   </li>
 </template>
 
@@ -27,18 +40,32 @@ span {
   flex-grow: 1;
 }
 
+.edit-input {
+  flex-grow: 1;
+  padding: 5px;
+  margin-right: 10px;
+}
+
 button {
-  background-color: #f44336;
   color: white;
   border: none;
   padding: 5px 10px;
   border-radius: 4px;
   cursor: pointer;
+  margin-left: 5px;
+}
+
+.edit-btn {
+  background-color: #2196f3;
+}
+
+.delete-btn {
+  background-color: #f44336;
 }
 </style>
 
 <script lang="ts">
-import { defineComponent, PropType } from 'vue';
+import { defineComponent, PropType, ref, nextTick, watch } from 'vue';
 import type { Todo } from '../models/todo';
 
 export default defineComponent({
@@ -49,10 +76,46 @@ export default defineComponent({
       required: true,
     },
   },
-  emits: ['toggle-todo', 'delete-todo'],
+  emits: ['update', 'delete-todo'],
   setup(props, { emit }) {
+    const isEditing = ref(false);
+    const editText = ref(props.todo.text);
+    const editInput = ref<HTMLInputElement | null>(null);
+
+    watch(() => props.todo.done, (isDone) => {
+      if (isDone) {
+        isEditing.value = false;
+      }
+    });
+
+    const startEdit = () => {
+      if (!props.todo.done) {
+        isEditing.value = true;
+        editText.value = props.todo.text;
+        nextTick(() => {
+          editInput.value?.focus();
+        });
+      }
+    };
+
+    const saveEdit = () => {
+      if (!isEditing.value) return;
+      
+      const trimmedText = editText.value.trim();
+      if (trimmedText === '') {
+        editText.value = props.todo.text;
+      } else if (trimmedText !== props.todo.text) {
+        emit('update', { ...props.todo, text: trimmedText });
+      }
+      isEditing.value = false;
+    };
+
+    const cancelEdit = () => {
+      isEditing.value = false;
+    };
+
     const toggleTodo = () => {
-      emit('toggle-todo', props.todo);
+      emit('update', { ...props.todo, done: !props.todo.done });
     };
 
     const deleteTodo = () => {
@@ -60,6 +123,12 @@ export default defineComponent({
     };
 
     return {
+      isEditing,
+      editText,
+      editInput,
+      startEdit,
+      saveEdit,
+      cancelEdit,
       toggleTodo,
       deleteTodo,
     };

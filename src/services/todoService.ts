@@ -29,7 +29,7 @@ export const todoService = {
 
   async updateTodo(todo: Todo): Promise<void> {
     const todoRef = doc(db, 'todos', todo.id);
-    await updateDoc(todoRef, { done: todo.done });
+    await updateDoc(todoRef, { text: todo.text, done: todo.done });
   },
 
   async deleteTodo(id: string): Promise<void> {

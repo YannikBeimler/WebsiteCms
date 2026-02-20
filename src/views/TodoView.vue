@@ -14,7 +14,7 @@
         v-for="todo in todos"
         :key="todo.id"
         :todo="todo"
-        @toggle-todo="toggleTodo"
+        @update="updateTodo"
         @delete-todo="deleteTodo"
       />
     </ul>
@@ -91,9 +91,8 @@ export default defineComponent({
       }
     };
 
-    const toggleTodo = async (todo: Todo) => {
-      const updatedTodo = { ...todo, done: !todo.done };
-      await todoService.updateTodo(updatedTodo);
+    const updateTodo = async (todo: Todo) => {
+      await todoService.updateTodo(todo);
     };
 
     const deleteTodo = async (id: string) => {
@@ -104,7 +103,7 @@ export default defineComponent({
       newTodo,
       todos,
       addTodo,
-      toggleTodo,
+      updateTodo,
       deleteTodo,
     };
   },
