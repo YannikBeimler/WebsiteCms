@@ -30,4 +30,5 @@ firestore-debug.log
 # Workspace Meta
 .gemini/handovers/*
 !.gemini/handovers/.gitkeep
+.gemini/STATE_LEDGER.md
 /worktrees/
