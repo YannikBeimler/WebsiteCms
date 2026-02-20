@@ -10,11 +10,11 @@ A task is only complete when all three checks (lint, build, and test) pass succe
 
 **Project Structure & Metadata:**
 
-- **The `meta/` Directory:** All auxiliary project information is consolidated here.
-    - `meta/agents/`: (Tracked) Contains agent configurations and instructions.
-    - `meta/docs/`: (Tracked) Architecture Decision Records (ADRs), system maps, and team documentation.
-    - `meta/STATE_LEDGER.md`: (Tracked) The primary ledger for tracking project progress and feature states.
-    - `meta/handovers/`: (Ignored) Transient state logs and detailed handover notes.
+- **The `.gemini/` Directory:** All auxiliary project information is consolidated here.
+    - `.gemini/agents/`: (Tracked) Contains agent configurations and instructions.
+    - `.gemini/docs/`: (Tracked) Architecture Decision Records (ADRs), system maps, and team documentation.
+    - `.gemini/STATE_LEDGER.md`: (Tracked) The primary ledger for tracking project progress and feature states.
+    - `.gemini/handovers/`: (Ignored) Transient state logs and detailed handover notes.
 - **Feature Development:** Use native `git worktree` for developing features in isolation. Avoid manual folder duplication.
 - **Package Management:** Prefer `pnpm` for efficient dependency management across multiple worktrees.
 

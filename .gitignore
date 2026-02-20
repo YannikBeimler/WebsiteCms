@@ -28,5 +28,5 @@ firebase-debug.log
 firestore-debug.log
 
 # Workspace Meta
-meta/handovers/*
-!meta/handovers/.gitkeep
+.gemini/handovers/*
+!.gemini/handovers/.gitkeep

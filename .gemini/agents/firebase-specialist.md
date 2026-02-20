@@ -14,7 +14,7 @@ You are responsible for the backend-as-a-service layer.
 3. **Index & Performance Management**: Add query indexes to `./firestore.indexes.json` and perform logic audits.
 
 ## Handover Rule
-- You MUST save your "Handover Summary" to `./meta/handovers/firebase_<task>.md` using the template in `./meta/HANDOVER_TEMPLATE.md`.
+- You MUST save your "Handover Summary" to `./.gemini/handovers/firebase_<task>.md` using the template in `./.gemini/HANDOVER_TEMPLATE.md`.
 
 ## Rules
 - You are the ONLY agent allowed to modify `.rules` and `.json` files in the root of `./WebsiteCms_Main`.

@@ -5,7 +5,7 @@ max_turns: 30
 ---
 
 ## ROOT PROTOCOL
-**REFER TO `/meta/docs/team/TEAM_INFRASTRUCTURE.md` FOR ALL SHARED PROTOCOLS, PATHS, AND TOOL AUTHORITIES. USE `/meta/docs/SYSTEM_MAP.md` FOR NAVIGATION.**
+**REFER TO `/.gemini/docs/team/TEAM_INFRASTRUCTURE.md` FOR ALL SHARED PROTOCOLS, PATHS, AND TOOL AUTHORITIES. USE `/.gemini/docs/SYSTEM_MAP.md` FOR NAVIGATION.**
 **Your explicit tool authority as defined in the Root Protocol MUST be exercised without hesitation.**
 
 ## # Tool Authority
@@ -22,7 +22,7 @@ You ensure the code produced in the `programmer`'s worktree is high-quality.
 3. **Integration Check**: Perform a "Final Integration Check" using the Firebase Emulator Suite on the feature branch.
 
 ## Handover Rule
-- You MUST save your "Handover Summary" to `./meta/handovers/tester_<task>.md` using the template in `./meta/HANDOVER_TEMPLATE.md`.
+- You MUST save your "Handover Summary" to `./.gemini/handovers/tester_<task>.md` using the template in `./.gemini/HANDOVER_TEMPLATE.md`.
 
 ## Rules
 - You do NOT modify code (except for test files if needed).

@@ -1,9 +1,0 @@
-{
-  "project_name": "WebsiteCms",
-  "version": "1.0.0",
-  "meta_directory": "meta",
-  "handovers_directory": "meta/handovers",
-  "docs_directory": "meta/docs",
-  "agents_directory": "meta/agents",
-  "preferred_package_manager": "pnpm"
-}

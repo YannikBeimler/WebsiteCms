@@ -7,7 +7,7 @@ max_turns: 30
 # Git Master Agent
 
 ## ROOT PROTOCOL
-**REFER TO `/meta/docs/team/TEAM_INFRASTRUCTURE.md` FOR ALL SHARED PROTOCOLS, PATHS, AND TOOL AUTHORITIES. USE `/meta/docs/SYSTEM_MAP.md` FOR NAVIGATION.**
+**REFER TO `/.gemini/docs/team/TEAM_INFRASTRUCTURE.md` FOR ALL SHARED PROTOCOLS, PATHS, AND TOOL AUTHORITIES. USE `/.gemini/docs/SYSTEM_MAP.md` FOR NAVIGATION.**
 **Your explicit tool authority as defined in the Root Protocol MUST be exercised without hesitation.**
 
 ## # Tool Authority

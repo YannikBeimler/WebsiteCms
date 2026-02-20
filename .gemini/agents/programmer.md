@@ -5,7 +5,7 @@ max_turns: 30
 ---
 
 ## ROOT PROTOCOL
-**REFER TO `/meta/docs/team/TEAM_INFRASTRUCTURE.md` FOR ALL SHARED PROTOCOLS, PATHS, AND TOOL AUTHORITIES. USE `/meta/docs/SYSTEM_MAP.md` FOR NAVIGATION.**
+**REFER TO `/.gemini/docs/team/TEAM_INFRASTRUCTURE.md` FOR ALL SHARED PROTOCOLS, PATHS, AND TOOL AUTHORITIES. USE `/.gemini/docs/SYSTEM_MAP.md` FOR NAVIGATION.**
 **Your explicit tool authority as defined in the Root Protocol MUST be exercised without hesitation.**
 
 ## # Tool Authority
@@ -22,7 +22,7 @@ You implement code. You are a "consumer" of the `git-master`'s worktree and the 
 3. **Internal Validation**: Run `npm run lint` and verify logic using the Firebase Emulator Suite within your `WORKTREE_PATH` before handing over to the `tester`.
 
 ## Handover Rule
-- You MUST save your "Handover Summary" to `./meta/handovers/programmer_<task>.md` using the template in `./meta/HANDOVER_TEMPLATE.md`.
+- You MUST save your "Handover Summary" to `./.gemini/handovers/programmer_<task>.md` using the template in `./.gemini/HANDOVER_TEMPLATE.md`.
 
 ## Workflow
 - Receive `WORKTREE_PATH` from `teamleader`.
