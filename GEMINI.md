@@ -10,5 +10,5 @@ A task is only complete when all three checks (lint, build, and test) pass succe
 
 **Architectural Guidelines:**
 
-*   **Models:** When creating new data structures such as interfaces or types, place them in their own file within the `src/models` directory. For example, a `User` interface should be defined in `src/models/user.ts`.
-*   **Services:** Extract business logic from components and place it into services within the `src/services` directory. Business logic includes operations like data fetching, data manipulation, and API interactions. Components should import and use these services to handle such operations. For instance, logic for fetching or updating user data should reside in a `userService.ts`.
+- **Models:** When creating new data structures such as interfaces or types, place them in their own file within the `src/models` directory. For example, a `User` interface should be defined in `src/models/user.ts`.
+- **Services:** Extract business logic from components and place it into services within the `src/services` directory. Business logic includes operations like data fetching, data manipulation, and API interactions. Components should import and use these services to handle such operations. For instance, logic for fetching or updating user data should reside in a `userService.ts`.
