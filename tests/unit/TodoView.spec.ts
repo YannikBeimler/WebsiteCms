@@ -3,8 +3,8 @@ import TodoView from '@/views/TodoView.vue';
 import { nextTick } from 'vue';
 
 const mockTodos = [
-  { id: '1', text: 'Todo 1', done: false },
-  { id: '2', text: 'Todo 2', done: true },
+  { id: '1', text: 'Todo 1', done: false, color: '#ffffff' },
+  { id: '2', text: 'Todo 2', done: true, color: '#ffffff' },
 ];
 
 jest.mock('@/firebase', () => ({

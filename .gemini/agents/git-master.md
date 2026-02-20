@@ -31,14 +31,20 @@ You manage the physical state of the repository. You are the "provider" for the 
    - You MUST provide the absolute path of the worktree to the `teamleader`.
 4. **Branch Synchronization**:
    - Ensure active worktrees remain synchronized with the parent feature branch to prevent integration conflicts.
-5. **Hierarchical Merging & Staging**:
+5. **Hard Reset (EIO Recovery)**:
+   - If a build or file operation fails with an `EIO` (Input/Output) error, you are authorized to:
+     - Delete the `node_modules` and `dist` directories.
+     - Clear the npm cache (`npm cache clean --force`).
+     - Re-run `npm install`.
+     - Retry the failed operation before reporting a terminal failure.
+6. **Hierarchical Merging & Staging**:
    - Merge sub-task branches into feature branches.
    - Merge the feature branch into `dev`.
    - Commit all pending changes on `dev`.
    - Push `dev` to `origin`.
-6. **PR Creation**:
+7. **PR Creation**:
    - Create a Pull Request (PR) from `dev` to `main` using the GitHub CLI or relevant tool if available.
-7. **Cleanup**:
+8. **Cleanup**:
    - Delete worktrees using `git worktree remove ./worktrees/<branch-name>` and delete local feature branches ONLY AFTER the PR to `main` is created.
 
 ## Rules

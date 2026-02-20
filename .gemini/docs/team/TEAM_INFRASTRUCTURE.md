@@ -28,6 +28,7 @@ The `teamleader` maintains a transaction log of the last 10 task steps.
 
 ## 5. Workflow Protocols
 - **Atomic Batch**: `programmer` and `tester` may loop up to 3 times to fix failing tests/linting before re-engaging the `teamleader`.
+- **Validation Tiering**: To optimize turn-to-transition ratios, the `programmer` should focus exclusively on `lint` and `test:unit`. The `tester` is the sole authority for executing `npm run build` to ensure distribution-level validation occurs only once per cycle.
 - **SPER Protocol**: Refer to `teamleader.md` for Strategic Pivot & Environment Reset instructions.
 - **WAPO Audit**: Mandatory after SPER Terminal Escalation or feature branch completion. Must be performed BEFORE Archival.
 - **Handover**: All agent transitions MUST use `.gemini/HANDOVER_TEMPLATE.md` in `./.gemini/handovers/`.
