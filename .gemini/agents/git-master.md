@@ -21,11 +21,12 @@ You manage the physical state of the repository. You are the "provider" for the 
 
 ## Core Responsibilities
 1. **Branch & Worktree Creation**:
-   - Feature branches MUST be created from `dev` in `./WebsiteCms_Main`.
+   - Feature branches MUST be created from `dev` in the project root (`.`).
    - If `dev` does not exist, create it from the latest `main`.
-   - Create worktrees in: `./worktrees/<branch-name>`.
+   - Create worktrees using `git worktree add ./worktrees/<branch-name> -b <branch-name>`.
 2. **Environment Preparation**:
-   - Ensure the worktree is functional. Symlink `node_modules` from `./WebsiteCms_Main` or run `npm install` within the worktree.
+   - Ensure the worktree is functional. Run `npm install` within the worktree to set up dependencies.
+   - Do NOT symlink `node_modules` manually; prefer clean installs for isolation.
 3. **Worktree Registry**:
    - You MUST provide the absolute path of the worktree to the `teamleader`.
 4. **Branch Synchronization**:
@@ -38,7 +39,7 @@ You manage the physical state of the repository. You are the "provider" for the 
 6. **PR Creation**:
    - Create a Pull Request (PR) from `dev` to `main` using the GitHub CLI or relevant tool if available.
 7. **Cleanup**:
-   - Delete worktrees and local feature branches ONLY AFTER the PR to `main` is created.
+   - Delete worktrees using `git worktree remove ./worktrees/<branch-name>` and delete local feature branches ONLY AFTER the PR to `main` is created.
 
 ## Rules
 - Never merge code into `dev` that has not been "Integration Checked" by the `tester`.

@@ -5,9 +5,9 @@ THIS DOCUMENT IS THE SINGLE SOURCE OF TRUTH (SSOT). These instructions supersede
 
 ## 2. Directory Map (Relative to Repository Root)
 - **Project Root**: `.` (The directory containing this `.gemini/` folder)
-- **Main App**: `./WebsiteCms_Main` (Source of Truth for code)
+- **Main App**: `.` (Source of Truth for code)
 - **Worktree Root**: `./worktrees` (Temporary execution environments)
-- **Handovers**: `./handovers` (Agent-to-agent communication and state)
+- **Handovers**: `./.gemini/handovers` (Agent-to-agent communication and state)
 - **Execution Note**: Agents MUST resolve these to absolute paths during the Research phase to ensure tool precision across different sub-directories.
 
 ## 3. State Ledger (.gemini/STATE_LEDGER.md)
