@@ -8,6 +8,16 @@ After every task that involves changes to source code or configuration files tha
 
 A task is only complete when all three checks (lint, build, and test) pass successfully in sequence. This validation process is not required for changes that do not affect the codebase, such as updating documentation.
 
+**Project Structure & Metadata:**
+
+- **The `meta/` Directory:** All auxiliary project information is consolidated here.
+    - `meta/agents/`: (Tracked) Contains agent configurations and instructions.
+    - `meta/docs/`: (Tracked) Architecture Decision Records (ADRs), system maps, and team documentation.
+    - `meta/STATE_LEDGER.md`: (Tracked) The primary ledger for tracking project progress and feature states.
+    - `meta/handovers/`: (Ignored) Transient state logs and detailed handover notes.
+- **Feature Development:** Use native `git worktree` for developing features in isolation. Avoid manual folder duplication.
+- **Package Management:** Prefer `pnpm` for efficient dependency management across multiple worktrees.
+
 **Architectural Guidelines:**
 
 - **Models:** When creating new data structures such as interfaces or types, place them in their own file within the `src/models` directory. For example, a `User` interface should be defined in `src/models/user.ts`.

@@ -26,3 +26,7 @@ pnpm-debug.log*
 .firebase/*.cache
 firebase-debug.log
 firestore-debug.log
+
+# Workspace Meta
+meta/handovers/*
+!meta/handovers/.gitkeep
