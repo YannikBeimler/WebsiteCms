@@ -23,13 +23,22 @@ export const todoService = {
   },
 
   async addTodo(text: string): Promise<Todo> {
-    const docRef = await addDoc(todosCollection, { text, done: false });
-    return { id: docRef.id, text, done: false };
+    const defaultColor = '#ffffff';
+    const docRef = await addDoc(todosCollection, {
+      text,
+      done: false,
+      color: defaultColor,
+    });
+    return { id: docRef.id, text, done: false, color: defaultColor };
   },
 
   async updateTodo(todo: Todo): Promise<void> {
     const todoRef = doc(db, 'todos', todo.id);
-    await updateDoc(todoRef, { done: todo.done });
+    await updateDoc(todoRef, {
+      text: todo.text,
+      done: todo.done,
+      color: todo.color,
+    });
   },
 
   async deleteTodo(id: string): Promise<void> {

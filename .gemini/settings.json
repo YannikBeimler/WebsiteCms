@@ -1,0 +1,12 @@
+{
+  "project_name": "WebsiteCms",
+  "version": "1.0.0",
+  "meta_directory": ".gemini",
+  "handovers_directory": ".gemini/handovers",
+  "docs_directory": ".gemini/docs",
+  "agents_directory": ".gemini/agents",
+  "preferred_package_manager": "npm",
+  "experimental": {
+    "enableAgents": true
+  }
+}

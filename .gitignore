@@ -26,3 +26,9 @@ pnpm-debug.log*
 .firebase/*.cache
 firebase-debug.log
 firestore-debug.log
+
+# Workspace Meta
+.gemini/handovers/*
+!.gemini/handovers/.gitkeep
+.gemini/STATE_LEDGER.md
+/worktrees/
