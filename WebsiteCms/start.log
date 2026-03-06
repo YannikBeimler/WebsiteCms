@@ -1,0 +1,111 @@
+
+> website-cms@0.0.0 start
+> ng serve
+
+- Building...
+
+One or more browsers which are configured in the project's Browserslist configuration will be ignored as ES5 output is not supported by the Angular CLI.
+Ignored browsers: kaios 2.5, op_mini all
+Initial chunk files | Names         |  Raw size
+styles.css          | styles        |  93.20 kB |
+polyfills.js        | polyfills     |  88.09 kB |
+main.js             | main          |  70.63 kB |
+
+                    | Initial total | 251.92 kB
+
+Application bundle generation complete. [3.895 seconds]
+
+Watch mode enabled. Watching for file changes...
+One or more browsers which are configured in the project's Browserslist configuration will be ignored as ES5 output is not supported by the Angular CLI.
+Ignored browsers: kaios 2.5, op_mini all
+  ➜  Local:   http://localhost:4200/
+- Changes detected. Rebuilding...
+
+One or more browsers which are configured in the project's Browserslist configuration will be ignored as ES5 output is not supported by the Angular CLI.
+Ignored browsers: kaios 2.5, op_mini all
+Initial chunk files | Names | Raw size
+main.js             | main  | 49.67 kB |
+
+Application bundle generation complete. [0.600 seconds]
+
+Page reload sent to client(s).
+- Changes detected. Rebuilding...
+
+One or more browsers which are configured in the project's Browserslist configuration will be ignored as ES5 output is not supported by the Angular CLI.
+Ignored browsers: kaios 2.5, op_mini all
+Initial chunk files | Names | Raw size
+main.js             | main  | 49.67 kB |
+
+Application bundle generation complete. [0.579 seconds]
+
+Page reload sent to client(s).
+- Changes detected. Rebuilding...
+
+One or more browsers which are configured in the project's Browserslist configuration will be ignored as ES5 output is not supported by the Angular CLI.
+Ignored browsers: kaios 2.5, op_mini all
+Initial chunk files | Names | Raw size
+main.js             | main  | 61.80 kB |
+
+Application bundle generation complete. [1.652 seconds]
+
+Page reload sent to client(s).
+- Changes detected. Rebuilding...
+
+One or more browsers which are configured in the project's Browserslist configuration will be ignored as ES5 output is not supported by the Angular CLI.
+Ignored browsers: kaios 2.5, op_mini all
+Initial chunk files | Names | Raw size
+main.js             | main  | 61.96 kB |
+
+Application bundle generation complete. [0.327 seconds]
+
+Page reload sent to client(s).
+- Changes detected. Rebuilding...
+
+One or more browsers which are configured in the project's Browserslist configuration will be ignored as ES5 output is not supported by the Angular CLI.
+Ignored browsers: kaios 2.5, op_mini all
+Initial chunk files | Names | Raw size
+main.js             | main  | 63.33 kB |
+
+Application bundle generation complete. [0.237 seconds]
+
+Page reload sent to client(s).
+- Changes detected. Rebuilding...
+
+One or more browsers which are configured in the project's Browserslist configuration will be ignored as ES5 output is not supported by the Angular CLI.
+Ignored browsers: kaios 2.5, op_mini all
+Initial chunk files | Names | Raw size
+main.js             | main  | 63.35 kB |
+
+Application bundle generation complete. [0.752 seconds]
+
+Page reload sent to client(s).
+- Changes detected. Rebuilding...
+
+One or more browsers which are configured in the project's Browserslist configuration will be ignored as ES5 output is not supported by the Angular CLI.
+Ignored browsers: kaios 2.5, op_mini all
+Initial chunk files | Names | Raw size
+main.js             | main  | 66.02 kB |
+
+Application bundle generation complete. [1.231 seconds]
+
+Page reload sent to client(s).
+- Changes detected. Rebuilding...
+
+One or more browsers which are configured in the project's Browserslist configuration will be ignored as ES5 output is not supported by the Angular CLI.
+Ignored browsers: kaios 2.5, op_mini all
+Initial chunk files | Names | Raw size
+main.js             | main  | 67.74 kB |
+
+Application bundle generation complete. [0.527 seconds]
+
+Page reload sent to client(s).
+- Changes detected. Rebuilding...
+
+One or more browsers which are configured in the project's Browserslist configuration will be ignored as ES5 output is not supported by the Angular CLI.
+Ignored browsers: kaios 2.5, op_mini all
+Initial chunk files | Names | Raw size
+main.js             | main  | 67.89 kB |
+
+Application bundle generation complete. [1.068 seconds]
+
+Page reload sent to client(s).
