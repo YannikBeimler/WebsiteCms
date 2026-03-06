@@ -15,7 +15,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: Install, build, and test
-        run: npm ci && npm run build && npm run test:unit
+        run: cd WebsiteCms && npm ci && npm run build && npm run test -- --watch=false --browsers=ChromeHeadless
         env:
           VUE_APP_FIREBASE_API_KEY: ${{ secrets.VUE_APP_FIREBASE_API_KEY }}
           VUE_APP_FIREBASE_AUTH_DOMAIN: ${{ secrets.VUE_APP_FIREBASE_AUTH_DOMAIN }}
