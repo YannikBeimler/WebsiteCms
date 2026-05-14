@@ -3,10 +3,11 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "firebase emulators:exec --only firestore,auth \"ng serve --host 0.0.0.0 --disable-host-check\"",
+    "start": "ng serve --host 0.0.0.0 --disable-host-check",
+    "emulators": "firebase emulators:start --only firestore,auth,storage",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
-    "test": "firebase emulators:exec --only firestore,auth \"ng test\""
+    "test": "ng test"
   },
   "private": true,
   "dependencies": {
