@@ -1,8 +1,15 @@
 {
   "name": "Angular & Firebase",
   "image": "mcr.microsoft.com/devcontainers/typescript-node:20",
-  "forwardPorts": [4200, 8080, 9099, 4000, 4400, 5001, 5000],
-  "postCreateCommand": "npm install -g @angular/cli firebase-tools && npm install",
+  "forwardPorts": [4200, 8080, 9099, 9199, 4000, 4400, 5001, 5000],
+  "features": {
+    "ghcr.io/devcontainers/features/java:1": {},
+    "ghcr.io/devcontainers/features/node:1": {
+      "version": "latest",
+      "globalPkgs": ["@angular/cli", "firebase-tools"]
+    }
+  },
+  "postCreateCommand": "npm install",
   "customizations": {
     "vscode": {
       "extensions": [
