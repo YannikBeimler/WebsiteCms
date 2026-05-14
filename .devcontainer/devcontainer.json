@@ -1,21 +1,34 @@
 {
   "name": "Angular & Firebase",
   "image": "mcr.microsoft.com/devcontainers/typescript-node:20",
-  "forwardPorts": [4200, 8080, 9099, 9199, 4000, 4400, 5001, 5000],
+  "forwardPorts": [
+    4200,
+    8080,
+    9099,
+    9199,
+    4000,
+    4400,
+    5001,
+    5000
+  ],
   "features": {
     "ghcr.io/devcontainers/features/java:1": {},
     "ghcr.io/devcontainers/features/node:1": {
-      "version": "latest",
-      "globalPkgs": ["@angular/cli", "firebase-tools"]
+      "version": "latest"
     }
   },
-  "postCreateCommand": "npm install",
+  "postCreateCommand": "npm install -g @angular/cli firebase-tools && npm install",
   "customizations": {
     "vscode": {
       "extensions": [
         "Angular.ng-template",
-        "dbaeumer.vscode-eslint"
-      ]
+        "dbaeumer.vscode-eslint",
+        "esbenp.prettier-vscode",
+        "google.cloud-code"
+      ],
+      "settings": {
+        "google.gemini.terminal.autoExecute": true
+      }
     }
   }
 }
