@@ -1,5 +1,5 @@
 import { Injectable, inject } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, combineLatest, map, Observable } from 'rxjs';
 import { Site } from '../models/site.model';
 import { Page } from '../models/page.model';
 import { SiteService } from './site.service';
@@ -15,23 +15,46 @@ export class CmsService {
   private currentSiteSubject = new BehaviorSubject<Site | null>(null);
   currentSite$ = this.currentSiteSubject.asObservable();
 
-  private navigationPagesSubject = new BehaviorSubject<Page[]>([]);
-  navigationPages$ = this.navigationPagesSubject.asObservable();
+  private allPagesSubject = new BehaviorSubject<Page[]>([]);
+  allPages$ = this.allPagesSubject.asObservable();
+
+  private activePageIdSubject = new BehaviorSubject<string | null>(null);
+  activePageId$ = this.activePageIdSubject.asObservable();
+
+  navigationPages$ = this.allPages$.pipe(
+    map(pages => pages.filter(p => !p.parentPageId && p.showInNavigation))
+  );
+
+  currentPage$ = combineLatest([this.allPages$, this.activePageId$]).pipe(
+    map(([pages, activeId]) => pages.find(p => p.id === activeId) || null)
+  );
 
   async loadSiteByUrl(url: string) {
     const site = await this.siteService.getSiteByUrl(url);
     this.currentSiteSubject.next(site);
     if (site && site.id) {
-       await this.loadNavigationPages(site.id);
+      await this.reloadPages();
     } else {
-       this.navigationPagesSubject.next([]);
+      this.allPagesSubject.next([]);
     }
   }
 
-  async loadNavigationPages(siteId: string) {
-    const rootPages = await this.pageService.getRootPagesForSite(siteId);
-    const navPages = rootPages.filter(p => p.showInNavigation);
-    this.navigationPagesSubject.next(navPages);
+  async reloadPages() {
+    const site = this.currentSiteSubject.value;
+    if (site && site.id) {
+      const allPages = await this.pageService.getPagesForSite(site.id);
+      this.allPagesSubject.next(allPages);
+    }
+  }
+
+  setActivePage(pageId: string | null) {
+    this.activePageIdSubject.next(pageId);
+  }
+
+  getChildPages(parentId: string): Observable<Page[]> {
+    return this.allPages$.pipe(
+      map(pages => pages.filter(p => p.parentPageId === parentId))
+    );
   }
 
   getCurrentSite(): Site | null {
