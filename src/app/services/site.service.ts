@@ -1,5 +1,5 @@
 import { Injectable, inject } from '@angular/core';
-import { Firestore, collection, getDocs, doc, getDoc, addDoc, updateDoc, deleteDoc, query, where } from '@angular/fire/firestore';
+import { Firestore, collection, getDocs, doc, getDoc, addDoc, updateDoc, deleteDoc, query, where, writeBatch } from '@angular/fire/firestore';
 import { Site } from '../models/site.model';
 
 @Injectable({
@@ -44,7 +44,21 @@ export class SiteService {
   }
 
   async deleteSite(id: string): Promise<void> {
+    // 1. Fetch all pages in subcollection
+    const pagesCollection = collection(this.firestore, `sites/${id}/pages`);
+    const pagesSnapshot = await getDocs(pagesCollection);
+
+    // 2. Use batch to delete all pages and the site
+    const batch = writeBatch(this.firestore);
+
+    pagesSnapshot.docs.forEach(pageDoc => {
+      batch.delete(pageDoc.ref);
+    });
+
+    // 3. Delete the site document itself
     const siteDoc = doc(this.firestore, 'sites', id);
-    await deleteDoc(siteDoc);
+    batch.delete(siteDoc);
+
+    await batch.commit();
   }
 }
