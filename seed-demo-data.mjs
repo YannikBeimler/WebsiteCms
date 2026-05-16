@@ -3,7 +3,7 @@ import { getFirestore, connectFirestoreEmulator, doc, setDoc, collection } from 
 import { getAuth, connectAuthEmulator, createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth";
 
 // Emulator Setup
-const app = initializeApp({ projectId: "demo-project", apiKey: "demo-key" });
+const app = initializeApp({ projectId: "demo-website-cms", apiKey: "demo-key" });
 const db = getFirestore(app);
 connectFirestoreEmulator(db, "localhost", 8080);
 const auth = getAuth(app);
