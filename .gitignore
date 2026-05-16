@@ -57,3 +57,4 @@ firestore-debug.log
 # Workspace Meta
 .gemini/handovers/*
 /worktrees/
+.obsidian/*
