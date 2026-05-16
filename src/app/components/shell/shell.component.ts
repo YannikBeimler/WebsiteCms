@@ -108,7 +108,6 @@ export class ShellComponent implements OnInit {
 
   ngOnInit() {
     this.currentHostUrl = window.location.hostname || 'localhost';
-    if(this.currentHostUrl === '127.0.0.1') this.currentHostUrl = 'localhost';
 
     // Subscribe to site loading to update UI state
     this.cms.currentSite$.subscribe(site => {
