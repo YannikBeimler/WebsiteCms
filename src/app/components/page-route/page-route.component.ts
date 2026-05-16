@@ -78,7 +78,7 @@ export class PageRouteComponent implements OnInit {
           ...result as Page,
           parentPageId: '' // Explicitly root
         };
-        const newPageId = await this.pageService.createPage(newPage);
+        const newPageId = await this.pageService.createPage(site.id!, newPage);
 
         // Reload navigation
         await this.cms.loadNavigationPages(site.id!);

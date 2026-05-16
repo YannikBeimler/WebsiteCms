@@ -89,16 +89,19 @@ export class PageViewComponent implements OnInit, OnChanges {
   }
 
   async loadPage(id: string) {
-    const page = await this.pageService.getPageById(id);
+    const site = this.cms.getCurrentSite();
+    if (!site?.id) return;
+    
+    const page = await this.pageService.getPageById(site.id, id);
     this.pageSubject.next(page);
 
     if (page) {
-      this.loadChildren(id);
+      this.loadChildren(site.id, id);
     }
   }
 
-  async loadChildren(parentId: string) {
-    const children = await this.pageService.getChildPages(parentId);
+  async loadChildren(siteId: string, parentId: string) {
+    const children = await this.pageService.getChildPages(siteId, parentId);
     // Only show children that have showOnParent true if we are rendering them nested
     const visibleChildren = children.filter(c => c.showOnParent);
     this.childPagesSubject.next(visibleChildren);
@@ -146,7 +149,7 @@ export class PageViewComponent implements OnInit, OnChanges {
 
     dialogRef.afterClosed().subscribe(async (result: Partial<Page>) => {
       if (result && page.id) {
-        await this.pageService.updatePage(page.id, result);
+        await this.pageService.updatePage(site.id!, page.id, result);
         this.loadPage(page.id); // Reload
         if (result.showInNavigation !== page.showInNavigation) {
              this.cms.loadNavigationPages(site.id!);
@@ -170,8 +173,8 @@ export class PageViewComponent implements OnInit, OnChanges {
           ...result as Page,
           parentPageId: parentPage.id
         };
-        await this.pageService.createPage(newPage);
-        this.loadChildren(parentPage.id!); // Reload children
+        await this.pageService.createPage(site.id!, newPage);
+        this.loadChildren(site.id!, parentPage.id!); // Reload children
       }
     });
   }
@@ -182,7 +185,7 @@ export class PageViewComponent implements OnInit, OnChanges {
 
      if(confirm(`Are you sure you want to delete ${page.name}?`)) {
          if (page.id) {
-             await this.pageService.deletePage(page.id);
+             await this.pageService.deletePage(site.id, page.id);
              this.cms.loadNavigationPages(site.id);
              // If we delete the currently viewed page, we should probably navigate away
          }
