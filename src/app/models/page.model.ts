@@ -2,7 +2,6 @@ import { LayoutOptions } from './layout-options.model';
 
 export interface Page {
   id?: string;
-  siteId: string;
   name: string;
   content: string;
   imageUrl?: string;

@@ -136,9 +136,12 @@ export class PageViewComponent implements OnInit, OnChanges {
   }
 
   editPage(page: Page) {
+    const site = this.cms.getCurrentSite();
+    if (!site?.id) return;
+
     const dialogRef = this.dialog.open(EditPageDialogComponent, {
       width: '600px',
-      data: { page: page, siteId: page.siteId }
+      data: { page: page, siteId: site.id }
     });
 
     dialogRef.afterClosed().subscribe(async (result: Partial<Page>) => {
@@ -146,23 +149,25 @@ export class PageViewComponent implements OnInit, OnChanges {
         await this.pageService.updatePage(page.id, result);
         this.loadPage(page.id); // Reload
         if (result.showInNavigation !== page.showInNavigation) {
-             this.cms.loadNavigationPages(page.siteId);
+             this.cms.loadNavigationPages(site.id!);
         }
       }
     });
   }
 
   addChildPage(parentPage: Page) {
+    const site = this.cms.getCurrentSite();
+    if (!site?.id) return;
+
     const dialogRef = this.dialog.open(EditPageDialogComponent, {
       width: '600px',
-      data: { siteId: parentPage.siteId, parentId: parentPage.id }
+      data: { siteId: site.id, parentId: parentPage.id }
     });
 
     dialogRef.afterClosed().subscribe(async (result: Partial<Page>) => {
       if (result) {
         const newPage: Page = {
           ...result as Page,
-          siteId: parentPage.siteId,
           parentPageId: parentPage.id
         };
         await this.pageService.createPage(newPage);
@@ -172,10 +177,13 @@ export class PageViewComponent implements OnInit, OnChanges {
   }
 
   async deletePage(page: Page) {
+     const site = this.cms.getCurrentSite();
+     if (!site?.id) return;
+
      if(confirm(`Are you sure you want to delete ${page.name}?`)) {
          if (page.id) {
              await this.pageService.deletePage(page.id);
-             this.cms.loadNavigationPages(page.siteId);
+             this.cms.loadNavigationPages(site.id);
              // If we delete the currently viewed page, we should probably navigate away
          }
      }
