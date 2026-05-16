@@ -152,10 +152,10 @@ export class PageViewComponent implements OnInit, OnChanges {
         
         try {
           // Firebase call first to get the generated ID
-          const createdPage = await this.pageService.createPage(site.id!, newPage);
+          const createdPageId = await this.pageService.createPage(site.id!, newPage);
           
-          // Local update
-          this.cms.addPageToStore(createdPage);
+          // Local update with full object
+          this.cms.addPageToStore({ ...newPage, id: createdPageId });
           this.snackBar.open('Child page added successfully', 'Close', { duration: 3000 });
         } catch (error) {
           console.error('Error adding child page:', error);
