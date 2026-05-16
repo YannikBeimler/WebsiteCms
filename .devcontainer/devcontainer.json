@@ -1,6 +1,9 @@
 {
   "name": "Angular & Firebase",
-  "image": "mcr.microsoft.com/devcontainers/typescript-node:20",
+  "build": {
+    "dockerfile": "Dockerfile"
+  },
+  "remoteUser": "node",
   "forwardPorts": [
     4200,
     8080,
@@ -11,13 +14,15 @@
     5001,
     5000
   ],
+  "otherPortsAttributes": {
+    "onAutoForward": "silent"
+  },
   "features": {
-    "ghcr.io/devcontainers/features/java:1": {},
-    "ghcr.io/devcontainers/features/node:1": {
-      "version": "latest"
+    "ghcr.io/devcontainers/features/java:1": {
+      "version": "17"
     }
   },
-  "postCreateCommand": "npm install -g @angular/cli firebase-tools && npm install",
+  "postCreateCommand": "npm install",
   "customizations": {
     "vscode": {
       "extensions": [
