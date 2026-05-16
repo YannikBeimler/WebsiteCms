@@ -96,13 +96,16 @@ async function seed() {
         // --- PAGES: TechCorp (localhost) ---
         console.log("Creating Pages for TechCorp...");
 
+        // TechCorp: Internal (Hidden from nav)
+        const tHidden = doc(collection(db, "pages"));
+
         // TechCorp: Home
         const tHome = doc(collection(db, "pages"));
         await setDoc(tHome, {
             id: tHome.id, siteId: site1Id, parentPageId: "",
             name: "Startseite",
-            content: "# Willkommen bei TechCorp\n\nWir entwickeln die Software von morgen.\n\nDies ist die Startseite. Schauen Sie sich unsere Produkte an.",
-            showInNavigation: true, showOnParent: false,
+            content: `# Willkommen bei TechCorp\n\nWir entwickeln die Software von morgen.\n\nDies ist die Startseite. Schauen Sie sich unsere Produkte an.\n\n[Zum internen Handbuch](/page/${tHidden.id})`,
+            showInNavigation: true, showOnParent: false, sortNumber: 0,
             layoutOptions: { fontAlignment: "center" } // Overrides site layout
         });
 
@@ -112,7 +115,7 @@ async function seed() {
             id: tProd.id, siteId: site1Id, parentPageId: "",
             name: "Produkte",
             content: "# Unsere Produktlinien\n\nHier finden Sie eine Übersicht aller Angebote.",
-            showInNavigation: true, showOnParent: false,
+            showInNavigation: true, showOnParent: false, sortNumber: 1,
             layoutOptions: {}
         });
 
@@ -122,7 +125,7 @@ async function seed() {
             id: tProdSoft.id, siteId: site1Id, parentPageId: tProd.id,
             name: "Software-Lösungen",
             content: "### Software\nWir bieten maßgeschneiderte Cloud-Lösungen und KI-Integrationen an.",
-            showInNavigation: false, showOnParent: true, // Rendered on Products page
+            showInNavigation: false, showOnParent: true, sortNumber: 0, // Rendered on Products page
             layoutOptions: {}
         });
 
@@ -132,17 +135,15 @@ async function seed() {
             id: tProdHard.id, siteId: site1Id, parentPageId: tProd.id,
             name: "Hardware-Systeme",
             content: "### Hardware\nHochleistungsserver für Ihr Rechenzentrum.",
-            showInNavigation: false, showOnParent: true, // Rendered on Products page
+            showInNavigation: false, showOnParent: true, sortNumber: 1, // Rendered on Products page
             layoutOptions: {}
         });
 
-        // TechCorp: Internal (Hidden from nav)
-        const tHidden = doc(collection(db, "pages"));
         await setDoc(tHidden, {
             id: tHidden.id, siteId: site1Id, parentPageId: "",
             name: "Internes Handbuch",
-            content: "# Streng Geheim\n\nDiese Seite taucht nicht in der Navigation auf. Sie kann nur über den direkten Link aufgerufen werden.",
-            showInNavigation: false, showOnParent: false,
+            content: "# Internes Handbuch\n\nHier finden Sie interne Dokumentationen und Richtlinien für Mitarbeiter. Diese Seite taucht nicht in der Navigation auf.",
+            showInNavigation: false, showOnParent: false, sortNumber: 2,
             layoutOptions: {}
         });
 
@@ -156,7 +157,7 @@ async function seed() {
             name: "Home",
             imageUrl: "https://images.unsplash.com/photo-1499951360447-b19be8fe80f5?auto=format&fit=crop&w=800&q=80",
             content: "# John Doe - Art Director\n\nWelcome to my creative space. I design visual experiences.",
-            showInNavigation: true, showOnParent: false,
+            showInNavigation: true, showOnParent: false, sortNumber: 0,
             layoutOptions: {}
         });
 
@@ -165,7 +166,7 @@ async function seed() {
             id: cGallery.id, siteId: site2Id, parentPageId: "",
             name: "Gallery",
             content: "## Selected Works\n\nHere are some of my recent projects. (In a real app, you would add image components here).",
-            showInNavigation: true, showOnParent: false,
+            showInNavigation: true, showOnParent: false, sortNumber: 1,
             layoutOptions: {}
         });
 
