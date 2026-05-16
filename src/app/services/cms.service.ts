@@ -22,7 +22,10 @@ export class CmsService {
   activePageId$ = this.activePageIdSubject.asObservable();
 
   navigationPages$ = this.allPages$.pipe(
-    map(pages => pages.filter(p => !p.parentPageId && p.showInNavigation))
+    map(pages => pages
+      .filter(p => !p.parentPageId && p.showInNavigation)
+      .sort((a, b) => (a.sortNumber || 0) - (b.sortNumber || 0))
+    )
   );
 
   currentPage$ = combineLatest([this.allPages$, this.activePageId$]).pipe(
