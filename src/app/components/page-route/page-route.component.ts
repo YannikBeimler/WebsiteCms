@@ -76,7 +76,6 @@ export class PageRouteComponent implements OnInit {
       if (result) {
         const newPage: Page = {
           ...result as Page,
-          siteId: site.id!,
           parentPageId: '' // Explicitly root
         };
         const newPageId = await this.pageService.createPage(newPage);

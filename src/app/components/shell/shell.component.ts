@@ -184,7 +184,6 @@ export class ShellComponent implements OnInit {
           if (result) {
               const newPage: Page = {
                   ...result as Page,
-                  siteId: currentSite.id!,
                   parentPageId: ''
               };
               const newPageId = await this.pageService.createPage(newPage);
