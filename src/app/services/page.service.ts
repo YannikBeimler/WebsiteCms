@@ -9,36 +9,35 @@ export class PageService {
   private firestore: Firestore = inject(Firestore);
 
   async getPagesForSite(siteId: string): Promise<Page[]> {
-    const pagesCollection = collection(this.firestore, 'pages');
-    const q = query(pagesCollection, where('siteId', '==', siteId), orderBy('sortNumber'));
+    const pagesCollection = collection(this.firestore, `sites/${siteId}/pages`);
+    const q = query(pagesCollection, orderBy('sortNumber'));
     const querySnapshot = await getDocs(q);
     return querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() } as Page));
   }
 
   async getRootPagesForSite(siteId: string): Promise<Page[]> {
-      const pagesCollection = collection(this.firestore, 'pages');
-      // Firestore doesn't allow 'where parentPageId == null' directly if the field doesn't exist,
-      // but if we store null or empty string, we can query it. We'll use an empty string for "root".
-      const q = query(pagesCollection, where('siteId', '==', siteId), where('parentPageId', '==', ''), orderBy('sortNumber'));
+      const pagesCollection = collection(this.firestore, `sites/${siteId}/pages`);
+      // Use empty string for root pages
+      const q = query(pagesCollection, where('parentPageId', '==', ''), orderBy('sortNumber'));
       const querySnapshot = await getDocs(q);
       return querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() } as Page));
   }
 
-  async getPageById(id: string): Promise<Page | null> {
-    const pageDoc = doc(this.firestore, 'pages', id);
+  async getPageById(siteId: string, id: string): Promise<Page | null> {
+    const pageDoc = doc(this.firestore, `sites/${siteId}/pages`, id);
     const docSnap = await getDoc(pageDoc);
     return docSnap.exists() ? { id: docSnap.id, ...docSnap.data() } as Page : null;
   }
 
-  async getChildPages(parentId: string): Promise<Page[]> {
-    const pagesCollection = collection(this.firestore, 'pages');
+  async getChildPages(siteId: string, parentId: string): Promise<Page[]> {
+    const pagesCollection = collection(this.firestore, `sites/${siteId}/pages`);
     const q = query(pagesCollection, where('parentPageId', '==', parentId), orderBy('sortNumber'));
     const querySnapshot = await getDocs(q);
     return querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() } as Page));
   }
 
-  async createPage(page: Page): Promise<string> {
-    const pagesCollection = collection(this.firestore, 'pages');
+  async createPage(siteId: string, page: Page): Promise<string> {
+    const pagesCollection = collection(this.firestore, `sites/${siteId}/pages`);
     // Ensure parentPageId is empty string if not provided for easier querying
     if (!page.parentPageId) {
       page.parentPageId = '';
@@ -47,18 +46,19 @@ export class PageService {
     return docRef.id;
   }
 
-  async updatePage(id: string, page: Partial<Page>): Promise<void> {
-    const pageDoc = doc(this.firestore, 'pages', id);
+  async updatePage(siteId: string, id: string, page: Partial<Page>): Promise<void> {
+    const pageDoc = doc(this.firestore, `sites/${siteId}/pages`, id);
     if (page.parentPageId === null || page.parentPageId === undefined) {
-       page.parentPageId = '';
+       // Do not overwrite parentPageId if not provided in Partial
+    } else if (page.parentPageId === '') {
+       // already root
     }
-    await updateDoc(pageDoc, page);
+    
+    await updateDoc(pageDoc, page as { [x: string]: any });
   }
 
-  async deletePage(id: string): Promise<void> {
-    const pageDoc = doc(this.firestore, 'pages', id);
-    // Note: Deleting a page should probably also handle deleting/reparenting children.
-    // We'll keep it simple for now and just delete the target page.
+  async deletePage(siteId: string, id: string): Promise<void> {
+    const pageDoc = doc(this.firestore, `sites/${siteId}/pages`, id);
     await deleteDoc(pageDoc);
   }
 }
