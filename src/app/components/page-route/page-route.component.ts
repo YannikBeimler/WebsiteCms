@@ -81,8 +81,8 @@ export class PageRouteComponent implements OnInit {
         };
         const newPageId = await this.pageService.createPage(site.id!, newPage);
 
-        // Reload pages store
-        await this.cms.reloadPages();
+        // Local update instead of full reload
+        this.cms.addPageToStore({ ...newPage, id: newPageId });
 
         // Navigate to the newly created page
         this.router.navigate(['/page', newPageId]);
