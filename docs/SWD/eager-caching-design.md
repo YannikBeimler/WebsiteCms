@@ -12,30 +12,32 @@ Optimize the application's data fetching strategy to:
 
 ## 2. Current State Analysis
 - Data is fetched via `async/await` Promises in `PageService` and `SiteService`.
+- **Component Fragmentation:** Both `PageViewComponent` and `PageRouteComponent` trigger independent data fetching logic.
 - **Anti-Pattern:** `PageViewComponent` uses synchronous `.subscribe().unsubscribe()` blocks for authorization checks (`checkCanEdit`).
 - **Missing Feedback:** Firebase operations lack structured error handling and user notification (e.g., SnackBar).
 
 ## 3. Proposed Architecture: Eager In-Memory Store
 
 ### 3.1 Central Data Orchestrator
-The `CmsService` will be refactored to act as a central "Store" (Single Source of Truth) for the current session.
+The `CmsService` will be refactored to act as a central "Store" (Single Source of Truth).
 
 - **Primary State:** `allPagesSubject: BehaviorSubject<Page[]>`
+- **Router State:** `activePageIdSubject: BehaviorSubject<string | null>` (Synchronized with Angular Router events).
 - **Scope:** All pages belonging to the currently active site, fetched from the `sites/{siteId}/pages` subcollection.
 
 ### 3.2 Reactive Data Flow
-Components will consume data through derived RxJS streams (Observables).
+Components (`PageViewComponent`, `PageRouteComponent`, `ShellComponent`) will consume data through derived RxJS streams:
 
 1.  **Navigation Stream:** `navigationPages$ = allPages$.pipe(map(pages => filterRoot(pages)))`
-2.  **Current Page Stream:** `currentPage$ = combineLatest([allPages$, activeRouteId$]).pipe(map(([pages, id]) => findPage(pages, id)))`
+2.  **Current Page Stream:** `currentPage$ = combineLatest([allPages$, activePageId$]).pipe(map(([pages, id]) => findPage(pages, id)))`
 3.  **Authorization Stream:** `canEdit$ = combineLatest([auth.userProfile$, cms.currentSite$]).pipe(map(([user, site]) => validateRole(user, site)))`
-    - *Note: This replaces the synchronous `checkCanEdit()` method.*
+4.  **Active State Logic:** The `CmsService` listens to `Router.events` (`NavigationEnd`) to update `activePageId$`, ensuring the navigation UI can highlight the correct link instantly.
 
 ### 3.3 Data Acquisition Strategy: "Full Site Fetch"
-When a site is loaded by its URL:
+When a site is loaded by its URL (handled in `PageRouteComponent` or `CmsService` initialization):
 1.  Fetch the `Site` document.
 2.  Immediately fetch **all** documents from the subcollection `sites/{siteId}/pages`.
-3.  Populate `allPagesSubject` with the result set.
+3.  Populate `allPagesSubject` and initialize the router sync logic.
 
 ## 4. Edit & Synchronization Logic
 
