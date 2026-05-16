@@ -47,6 +47,24 @@ export class CmsService {
     }
   }
 
+  addPageToStore(page: Page) {
+    const currentPages = this.allPagesSubject.value;
+    this.allPagesSubject.next([...currentPages, page]);
+  }
+
+  updatePageInStore(pageId: string, data: Partial<Page>) {
+    const currentPages = this.allPagesSubject.value;
+    const updatedPages = currentPages.map(p =>
+      p.id === pageId ? { ...p, ...data } : p
+    );
+    this.allPagesSubject.next(updatedPages);
+  }
+
+  removePageFromStore(pageId: string) {
+    const currentPages = this.allPagesSubject.value;
+    this.allPagesSubject.next(currentPages.filter(p => p.id !== pageId));
+  }
+
   setActivePage(pageId: string | null) {
     this.activePageIdSubject.next(pageId);
   }
