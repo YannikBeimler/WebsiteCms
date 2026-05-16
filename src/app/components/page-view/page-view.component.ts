@@ -9,7 +9,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { AuthService } from '../../services/auth.service';
 import { CmsService } from '../../services/cms.service';
 import { MatDialogModule, MatDialog } from '@angular/material/dialog';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Observable, of } from 'rxjs';
 import { EditPageDialogComponent } from '../edit-dialogs/edit-page-dialog.component';
 
 @Component({
@@ -59,17 +59,14 @@ import { EditPageDialogComponent } from '../edit-dialogs/edit-page-dialog.compon
 export class PageViewComponent implements OnInit, OnChanges {
   private pageService = inject(PageService);
   private auth = inject(AuthService);
-  private cms = inject(CmsService);
+  cms = inject(CmsService);
   private dialog = inject(MatDialog);
 
   @Input() pageId?: string;
   @Input() nested: boolean = false;
 
-  private pageSubject = new BehaviorSubject<Page | null>(null);
-  page$ = this.pageSubject.asObservable();
-
-  private childPagesSubject = new BehaviorSubject<Page[]>([]);
-  childPages$ = this.childPagesSubject.asObservable();
+  page$: Observable<Page | null> = of(null);
+  childPages$: Observable<Page[]> = of([]);
 
   canEditUser: boolean = false;
 
@@ -84,27 +81,13 @@ export class PageViewComponent implements OnInit, OnChanges {
 
   ngOnChanges(changes: SimpleChanges) {
     if (changes['pageId'] && this.pageId) {
-      this.loadPage(this.pageId);
+      this.page$ = this.cms.allPages$.pipe(
+        map(pages => pages.find(p => p.id === this.pageId) || null)
+      );
+      this.childPages$ = this.cms.getChildPages(this.pageId).pipe(
+          map(children => children.filter(c => c.showOnParent))
+      );
     }
-  }
-
-  async loadPage(id: string) {
-    const site = this.cms.getCurrentSite();
-    if (!site?.id) return;
-    
-    const page = await this.pageService.getPageById(site.id, id);
-    this.pageSubject.next(page);
-
-    if (page) {
-      this.loadChildren(site.id, id);
-    }
-  }
-
-  async loadChildren(siteId: string, parentId: string) {
-    const children = await this.pageService.getChildPages(siteId, parentId);
-    // Only show children that have showOnParent true if we are rendering them nested
-    const visibleChildren = children.filter(c => c.showOnParent);
-    this.childPagesSubject.next(visibleChildren);
   }
 
   getLayoutStyles(page: Page) {
@@ -150,10 +133,7 @@ export class PageViewComponent implements OnInit, OnChanges {
     dialogRef.afterClosed().subscribe(async (result: Partial<Page>) => {
       if (result && page.id) {
         await this.pageService.updatePage(site.id!, page.id, result);
-        this.loadPage(page.id); // Reload
-        if (result.showInNavigation !== page.showInNavigation) {
-             this.cms.loadNavigationPages(site.id!);
-        }
+        this.cms.reloadPages();
       }
     });
   }
@@ -174,7 +154,7 @@ export class PageViewComponent implements OnInit, OnChanges {
           parentPageId: parentPage.id
         };
         await this.pageService.createPage(site.id!, newPage);
-        this.loadChildren(site.id!, parentPage.id!); // Reload children
+        this.cms.reloadPages();
       }
     });
   }
@@ -186,7 +166,7 @@ export class PageViewComponent implements OnInit, OnChanges {
      if(confirm(`Are you sure you want to delete ${page.name}?`)) {
          if (page.id) {
              await this.pageService.deletePage(site.id, page.id);
-             this.cms.loadNavigationPages(site.id);
+             this.cms.reloadPages();
              // If we delete the currently viewed page, we should probably navigate away
          }
      }
