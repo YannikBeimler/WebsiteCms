@@ -187,7 +187,7 @@ export class ShellComponent implements OnInit {
                   parentPageId: ''
               };
               const newPageId = await this.pageService.createPage(currentSite.id!, newPage);
-              await this.cms.loadNavigationPages(currentSite.id!);
+              await this.cms.reloadPages();
               this.router.navigate(['/page', newPageId]);
           }
       });

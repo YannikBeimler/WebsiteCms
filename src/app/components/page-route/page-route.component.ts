@@ -60,6 +60,7 @@ export class PageRouteComponent implements OnInit {
   ngOnInit() {
     this.route.paramMap.subscribe(params => {
       this.pageId = params.get('id') || undefined;
+      this.cms.setActivePage(this.pageId || null);
     });
   }
 
@@ -80,8 +81,8 @@ export class PageRouteComponent implements OnInit {
         };
         const newPageId = await this.pageService.createPage(site.id!, newPage);
 
-        // Reload navigation
-        await this.cms.loadNavigationPages(site.id!);
+        // Reload pages store
+        await this.cms.reloadPages();
 
         // Navigate to the newly created page
         this.router.navigate(['/page', newPageId]);
