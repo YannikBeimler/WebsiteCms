@@ -1,5 +1,5 @@
-import { Component, inject, OnInit } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { Component, inject, OnInit, Inject } from '@angular/core';
+import { CommonModule, DOCUMENT } from '@angular/common';
 import { RouterOutlet, RouterModule, Router } from '@angular/router';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatButtonModule } from '@angular/material/button';
@@ -16,6 +16,7 @@ import { EditPageDialogComponent } from '../edit-dialogs/edit-page-dialog.compon
 import { Site } from '../../models/site.model';
 import { Page } from '../../models/page.model';
 import { PageService } from '../../services/page.service';
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-shell',
@@ -92,6 +93,7 @@ export class ShellComponent implements OnInit {
   pageService = inject(PageService);
   dialog = inject(MatDialog);
   router = inject(Router);
+  document = inject(DOCUMENT);
 
   canEditSite$: Observable<boolean>;
   currentHostUrl = 'localhost';
@@ -107,7 +109,8 @@ export class ShellComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.currentHostUrl = window.location.hostname || 'localhost';
+    const rawHost = this.document.location.hostname || 'localhost';
+    this.currentHostUrl = environment.hostMappings[rawHost] || rawHost;
 
     // Subscribe to site loading to update UI state
     this.cms.currentSite$.subscribe(site => {
