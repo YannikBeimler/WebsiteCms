@@ -24,8 +24,8 @@ Reference: `docs/SWD/_index.md`
 ## Technical Debt & Refactoring
 Reference: `docs/best-practices-and-issues.md`
 
-- [ ] **SSR Safety:** Replace direct `window` access in `ShellComponent` with the `DOCUMENT` injection token.
-- [ ] **Remove Hardcoded Mappings:** Move host mapping (`127.0.0.1` -> `localhost`) in `ShellComponent` to environment configuration.
+- [x] **SSR Safety:** Replace direct `window` access in `ShellComponent` with the `DOCUMENT` injection token.
+- [x] **Remove Hardcoded Mappings:** Move host mapping (`127.0.0.1` -> `localhost`) in `ShellComponent` to environment configuration.
 
 ## New Features
 - (No entries yet)
