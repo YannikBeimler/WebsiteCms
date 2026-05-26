@@ -1,6 +1,7 @@
 export const environment = {
   production: false,
   useEmulators: true,
+  hostMappings: {} as Record<string, string>,
   firebase: {
     projectId: 'demo-website-cms',
     appId: '1:1234567890:web:1234567890',
